@@ -71,6 +71,10 @@ app.post("/modcall", async (req, res) => {
 
     // ✅ Mobile-safe join instructions
     embedFields.push({
+              name: "Server",
+        value: **Pc Users: Copy and paste to join:**\n\\\\n${robloxLink}\n\\\`
+      }
+    ];
       name: "Join Server",
       value:
         `📱 **Mobile Users:** Tap & hold to copy this link:\n` +
