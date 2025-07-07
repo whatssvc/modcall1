@@ -48,8 +48,8 @@ app.post("/modcall", async (req, res) => {
           {
             name: "Server",
             value:
-              `Click to join:\n[Join Server](${websiteLink})\n\n` +
-              `Or copy this Roblox link manually:\n\`\`\`\n${robloxLink}\n\`\`\``
+              `**Copy and paste to join:** 
+              `Copy this Roblox link manually:\n\`\`\`\n${robloxLink}\n\`\`\``
           }
         ],
         timestamp: new Date().toISOString()
