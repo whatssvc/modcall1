@@ -27,7 +27,6 @@ app.post("/modcall", async (req, res) => {
     if (!channel) return res.status(404).send("Channel not found");
 
     const robloxLink = `roblox://placeId=${placeId}&jobId=${jobId}`;
-    const websiteLink = `https://www.roblox.com/games/${placeId}?privateServerLinkCode=${jobId}`;
 
     await channel.send({
       content: `<@&${MOD_ROLE_ID}>`,
@@ -47,9 +46,7 @@ app.post("/modcall", async (req, res) => {
           },
           {
             name: "Server",
-            value:
-              `**Copy and paste to join:** 
-              `Copy this Roblox link manually:\n\`\`\`\n${robloxLink}\n\`\`\``
+            value: `**Copy and paste to join:**\n\`\`\`\n${robloxLink}\n\`\`\``
           }
         ],
         timestamp: new Date().toISOString()
