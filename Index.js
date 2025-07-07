@@ -27,6 +27,7 @@ app.post("/modcall", async (req, res) => {
     if (!channel) return res.status(404).send("Channel not found");
 
     const robloxLink = `roblox://placeId=${placeId}&jobId=${jobId}`;
+    const targetProfileLink = `https://www.roblox.com/users/${target}/profile`;
 
     await channel.send({
       content: `<@&${MOD_ROLE_ID}>`,
@@ -46,7 +47,9 @@ app.post("/modcall", async (req, res) => {
           },
           {
             name: "Target",
-            value: target || "*No target provided*",
+            value: target and target.match("^%d+$") 
+              ? `[User ${target}](${targetProfileLink})` 
+              : `*Invalid target ID: ${target}*`,
             inline: true
           },
           {
@@ -64,6 +67,7 @@ app.post("/modcall", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
 
 
 client.login(DISCORD_TOKEN);
