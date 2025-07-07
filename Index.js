@@ -77,7 +77,7 @@ app.post("/modcall", async (req, res) => {
         `\`\`\`\n${robloxLink}\n\`\`\`\n` +
         `📱 **Mobile Users:** Tap and hold to copy:\n` +
         `\`${robloxLink}\`\n\n` +
-        `🧠 Paste into the Roblox app to join directly.`
+        `🧠 Paste into your browser to join directly.`
     });
 
     await channel.send({
