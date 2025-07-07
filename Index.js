@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const { Client, GatewayIntentBits, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
+const { Client, GatewayIntentBits } = require("discord.js");
 
 const app = express();
 app.use(bodyParser.json());
@@ -34,8 +34,7 @@ app.post("/modcall", async (req, res) => {
     const channel = await client.channels.fetch(MOD_CHANNEL_ID);
     if (!channel) return res.status(404).send("Channel not found");
 
-    const robloxJoinLink = `roblox://placeId=${placeId}&jobId=${jobId}`;
-    const robloxWebLink = `https://www.roblox.com/games/${placeId}?jobId=${jobId}`;
+    const robloxLink = `roblox://placeId=${placeId}&jobId=${jobId}`;
 
     const embedFields = [
       {
@@ -70,18 +69,14 @@ app.post("/modcall", async (req, res) => {
       });
     }
 
-    // Add server link with Join button
+    // ✅ Mobile-safe join instructions
     embedFields.push({
-      name: "Server Info",
-      value: `Use the button below to join the game server.`
+      name: "Join Server",
+      value:
+        `📱 **Mobile Users:** Tap & hold to copy this link:\n` +
+        `\`${robloxLink}\`\n\n` +
+        `🧠 Paste it into Roblox app or browser to join directly.`
     });
-
-    const joinButton = new ButtonBuilder()
-      .setLabel("Join Server")
-      .setStyle(ButtonStyle.Link)
-      .setURL(robloxWebLink); // Use web URL, more mobile friendly
-
-    const row = new ActionRowBuilder().addComponents(joinButton);
 
     await channel.send({
       content: `<@&${MOD_ROLE_ID}>`,
@@ -90,8 +85,7 @@ app.post("/modcall", async (req, res) => {
         color: 0xff0000,
         fields: embedFields,
         timestamp: new Date().toISOString()
-      }],
-      components: [row]
+      }]
     });
 
     res.send("✅ Mod call sent");
