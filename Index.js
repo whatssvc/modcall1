@@ -28,19 +28,19 @@ app.post("/modcall", async (req, res) => {
 
     const serverLink = `roblox://placeId=${placeId}&jobId=${jobId}`;
 
-await channel.send({
-  content: `## __<@&${MOD_ROLE_ID}> Game Link: [Click to Join](https://www.roblox.com://placeId=${placeId}&jobId=${jobId})__`,
-  embeds: [{
-    title: "🚨 Mod Call",
-    color: 0xff0000,
-    fields: [
-      { name: "Caller", value: `[${username}](https://www.roblox.com/users/${userId}/profile)`, inline: true },
-      { name: "Reason", value: reason || "*No reason provided*", inline: true },
-      { name: "Game Page", value: `[View on Roblox](https://www.roblox.com/games/${placeId})`, inline: false }
-    ],
-    timestamp: new Date().toISOString()
-  }]
-});
+    await channel.send({
+      content: `<@&${MOD_ROLE_ID}>`,
+      embeds: [{
+        title: "🚨 Mod Call",
+        color: 0xff0000,
+        fields: [
+          { name: "Caller", value: `[${username}](https://www.roblox.com/users/${userId}/profile)`, inline: true },
+          { name: "Reason", value: reason || "*No reason provided*", inline: true },
+          { name: "Server", value: `[Join Server](${serverLink})` }
+        ],
+        timestamp: new Date().toISOString()
+      }]
+    });
 
     res.send("✅ Mod call sent");
   } catch (err) {
