@@ -8,8 +8,8 @@ app.use(bodyParser.json());
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const PORT = process.env.PORT || 3000;
 
-const MOD_CHANNEL_ID = "1391646398977675364"; // Replace with your actual channel ID
-const MOD_ROLE_ID = "1391654796989169707";   // Replace with your actual mod role ID
+const MOD_CHANNEL_ID = "1391646398977675364";
+const MOD_ROLE_ID = "1391654796989169707";
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages]
@@ -69,17 +69,15 @@ app.post("/modcall", async (req, res) => {
       });
     }
 
-    // ✅ Mobile-safe join instructions
+    // Both PC and mobile copy methods
     embedFields.push({
-              name: "Server",
-        value: **Pc Users: Copy and paste to join:**\n\\\\n${robloxLink}\n\\\`
-      }
-    ];
       name: "Join Server",
       value:
-        `📱 **Mobile Users:** Tap & hold to copy this link:\n` +
+        `🖥️ **PC Users:** Copy and paste this into Roblox:\n` +
+        `\`\`\`\n${robloxLink}\n\`\`\`\n` +
+        `📱 **Mobile Users:** Tap and hold to copy:\n` +
         `\`${robloxLink}\`\n\n` +
-        `🧠 Paste it into Roblox app or browser to join directly.`
+        `🧠 Paste into the Roblox app to join directly.`
     });
 
     await channel.send({
