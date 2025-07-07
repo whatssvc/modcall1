@@ -44,19 +44,30 @@ app.post("/modcall", async (req, res) => {
         value: `**Copy and paste to join:**\n\`\`\`\n${robloxLink}\n\`\`\``
       }
     ];
-if (target && !isNaN(Number(target))) {
+const { targetUserId, targetUserName } = req.body;
+
+if (targetUserName && targetUserName.trim() !== "") {
+  // Use username in embed
   embedFields.splice(2, 0, {
     name: "Target",
-    value: `[User ${target}](https://www.roblox.com/users/${target}/profile)`,
+    value: `[${targetUserName}](https://www.roblox.com/users/${targetUserId}/profile)`,
     inline: true
   });
-} else if (target !== undefined) {
+} else if (targetUserId && !isNaN(Number(targetUserId))) {
+  // Fallback to UserId if no username
+  embedFields.splice(2, 0, {
+    name: "Target",
+    value: `[User ${targetUserId}](https://www.roblox.com/users/${targetUserId}/profile)`,
+    inline: true
+  });
+} else {
   embedFields.splice(2, 0, {
     name: "Target",
     value: "*Invalid or unknown target*",
     inline: true
   });
 }
+
 
 
 
