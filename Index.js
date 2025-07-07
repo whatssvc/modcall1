@@ -36,7 +36,7 @@ await channel.send({
     fields: [
       { name: "Caller", value: `[${username}](https://www.roblox.com/users/${userId}/profile)`, inline: true },
       { name: "Reason", value: reason || "*No reason provided*", inline: true },
-      { name: "Server",  value: `[Click to Join Server](roblox://placeId=${placeId}&jobId=${jobId})`, inline: false }
+      { name: "Server",  value: `[Click to Join Server](https://www.roblox://placeId=${placeId}&jobId=${jobId})`, inline: false }
     ],
     timestamp: new Date().toISOString()
   }]
