@@ -27,36 +27,45 @@ app.post("/modcall", async (req, res) => {
     if (!channel) return res.status(404).send("Channel not found");
 
     const robloxLink = `roblox://placeId=${placeId}&jobId=${jobId}`;
-    const targetProfileLink = `https://www.roblox.com/users/${target}/profile`;
+
+    const embedFields = [
+      {
+        name: "Caller",
+        value: `[${username}](https://www.roblox.com/users/${userId}/profile)`,
+        inline: true
+      },
+      {
+        name: "Reason",
+        value: reason || "*No reason provided*",
+        inline: true
+      },
+      {
+        name: "Server",
+        value: `**Copy and paste to join:**\n\`\`\`\n${robloxLink}\n\`\`\``
+      }
+    ];
+
+    // Only add Target field if a valid target user ID is provided
+    if (target && !isNaN(target)) {
+      embedFields.splice(2, 0, {
+        name: "Target",
+        value: `[User ${target}](https://www.roblox.com/users/${target}/profile)`,
+        inline: true
+      });
+    } else if (target !== undefined) {
+      embedFields.splice(2, 0, {
+        name: "Target",
+        value: "*Invalid or unknown target*",
+        inline: true
+      });
+    }
 
     await channel.send({
       content: `<@&${MOD_ROLE_ID}>`,
       embeds: [{
         title: "🚨 Mod Call",
         color: 0xff0000,
-        fields: [
-          {
-            name: "Caller",
-            value: `[${username}](https://www.roblox.com/users/${userId}/profile)`,
-            inline: true
-          },
-          {
-            name: "Reason",
-            value: reason || "*No reason provided*",
-            inline: true
-          },
-          {
-          name: "Target",
-            value: target and target.match("^%d+$") 
-              ? `[User ${target}](${targetProfileLink})` 
-              : `*Invalid target ID: ${target}*`,
-            inline: true
-          },
-          {
-            name: "Server",
-            value: `**Copy and paste to join:**\n\`\`\`\n${robloxLink}\n\`\`\``
-          }
-        ],
+        fields: embedFields,
         timestamp: new Date().toISOString()
       }]
     });
@@ -67,5 +76,6 @@ app.post("/modcall", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
 client.login(DISCORD_TOKEN);
 app.listen(PORT, () => console.log(`🌐 Express server live on port ${PORT}`));
