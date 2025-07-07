@@ -6,10 +6,10 @@ const app = express();
 app.use(bodyParser.json());
 
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
-const PORT = process.env.PORT || 3000; // Render uses its own port
+const PORT = process.env.PORT || 3000;
 
-const MOD_CHANNEL_ID = "1391646398977675364"; // put your channel ID
-const MOD_ROLE_ID = "1391654796989169707";       // put your mod role ID
+const MOD_CHANNEL_ID = "1391646398977675364"; // Replace with your actual channel ID
+const MOD_ROLE_ID = "1391654796989169707";   // Replace with your actual mod role ID
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages]
@@ -26,7 +26,8 @@ app.post("/modcall", async (req, res) => {
     const channel = await client.channels.fetch(MOD_CHANNEL_ID);
     if (!channel) return res.status(404).send("Channel not found");
 
-    const serverLink = `roblox://placeId=${placeId}&jobId=${jobId}`;
+    const robloxLink = `roblox://placeId=${placeId}&jobId=${jobId}`;
+    const websiteLink = `https://www.roblox.com/games/${placeId}?privateServerLinkCode=${jobId}`;
 
     await channel.send({
       content: `<@&${MOD_ROLE_ID}>`,
@@ -34,9 +35,22 @@ app.post("/modcall", async (req, res) => {
         title: "🚨 Mod Call",
         color: 0xff0000,
         fields: [
-          { name: "Caller", value: `[${username}](https://www.roblox.com/users/${userId}/profile)`, inline: true },
-          { name: "Reason", value: reason || "*No reason provided*", inline: true },
-          { name: "Server", value: `**Copy and Past link in brower.**${serverLink}` }
+          {
+            name: "Caller",
+            value: `[${username}](https://www.roblox.com/users/${userId}/profile)`,
+            inline: true
+          },
+          {
+            name: "Reason",
+            value: reason || "*No reason provided*",
+            inline: true
+          },
+          {
+            name: "Server",
+            value:
+              `Click to join:\n[Join Server](${websiteLink})\n\n` +
+              `Or copy this Roblox link manually:\n\`\`\`\n${robloxLink}\n\`\`\``
+          }
         ],
         timestamp: new Date().toISOString()
       }]
