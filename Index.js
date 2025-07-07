@@ -45,20 +45,20 @@ app.post("/modcall", async (req, res) => {
       }
     ];
 
-    // Only add Target field if a valid target user ID is provided
-    if (target && !isNaN(target)) {
-      embedFields.splice(2, 0, {
-        name: "Target",
-        value: `[User ${target}](https://www.roblox.com/users/${target}/profile)`,
-        inline: true
-      });
-    } else if (target !== undefined) {
-      embedFields.splice(2, 0, {
-        name: "Target",
-        value: "*Invalid or unknown target*",
-        inline: true
-      });
-    }
+if (target && !isNaN(Number(target))) {
+  embedFields.splice(2, 0, {
+    name: "Target",
+    value: `[User ${target}](https://www.roblox.com/users/${target}/profile)`,
+    inline: true
+  });
+} else if (target !== undefined) {
+  embedFields.splice(2, 0, {
+    name: "Target",
+    value: "*Invalid or unknown target*",
+    inline: true
+  });
+}
+
 
     await channel.send({
       content: `<@&${MOD_ROLE_ID}>`,
