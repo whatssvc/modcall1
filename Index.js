@@ -36,7 +36,7 @@ app.post("/modcall", async (req, res) => {
         fields: [
           { name: "Caller", value: `[${username}](https://www.roblox.com/users/${userId}/profile)`, inline: true },
           { name: "Reason", value: reason || "*No reason provided*", inline: true },
-          { name: "Server", value: `[Join Server](${serverLink})` }
+          { name: "Server", value: `**Copy and Past link in brower.**${serverLink}` }
         ],
         timestamp: new Date().toISOString()
       }]
