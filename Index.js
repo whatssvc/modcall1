@@ -44,7 +44,6 @@ app.post("/modcall", async (req, res) => {
         value: `**Copy and paste to join:**\n\`\`\`\n${robloxLink}\n\`\`\``
       }
     ];
-
 if (target && !isNaN(Number(target))) {
   embedFields.splice(2, 0, {
     name: "Target",
@@ -58,6 +57,7 @@ if (target && !isNaN(Number(target))) {
     inline: true
   });
 }
+
 
 
     await channel.send({
