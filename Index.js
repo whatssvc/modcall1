@@ -46,7 +46,7 @@ app.post("/modcall", async (req, res) => {
             inline: true
           },
           {
-            name: "Target",
+          name: "Target",
             value: target and target.match("^%d+$") 
               ? `[User ${target}](${targetProfileLink})` 
               : `*Invalid target ID: ${target}*`,
@@ -67,8 +67,5 @@ app.post("/modcall", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-
-
-
 client.login(DISCORD_TOKEN);
 app.listen(PORT, () => console.log(`🌐 Express server live on port ${PORT}`));
