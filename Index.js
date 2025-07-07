@@ -20,7 +20,7 @@ client.once("ready", () => {
 });
 
 app.post("/modcall", async (req, res) => {
-  const { username, userId, reason, jobId, placeId } = req.body;
+  const { username, userId, reason, target, jobId, placeId } = req.body;
 
   try {
     const channel = await client.channels.fetch(MOD_CHANNEL_ID);
@@ -45,6 +45,11 @@ app.post("/modcall", async (req, res) => {
             inline: true
           },
           {
+            name: "Target",
+            value: target || "*No target provided*",
+            inline: true
+          },
+          {
             name: "Server",
             value: `**Copy and paste to join:**\n\`\`\`\n${robloxLink}\n\`\`\``
           }
@@ -59,6 +64,7 @@ app.post("/modcall", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
 
 client.login(DISCORD_TOKEN);
 app.listen(PORT, () => console.log(`🌐 Express server live on port ${PORT}`));
